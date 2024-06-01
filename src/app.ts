@@ -1,8 +1,11 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import cors from "cors";
+import { ProductRouter } from "./modules/product/product.route";
 const app = express();
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
-});
+// Parsers
+app.use(express.json());
+app.use(cors());
 
+app.use("/api", ProductRouter);
 export default app;
