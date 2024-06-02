@@ -1,3 +1,4 @@
+import { error } from "console";
 import { ProductService } from "./product.service";
 import { Request, Response } from "express";
 
@@ -15,14 +16,107 @@ const createProduct = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Product Create Successfully",
+      message:
+        "Something Wrong Occurs When creating a New Product Successfully",
       error: error,
     });
   }
 };
 
 /// Get a Product Controller
+const getProduct = async (req: Request, res: Response) => {
+  try {
+    const data = req.body;
+    const result = await ProductService.getProductDb(data);
 
+    res.status(200).json({
+      success: true,
+      message: "All Product Fetched Successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error! when Fetching the Data",
+      error: error,
+    });
+  }
+};
+
+const getSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await ProductService.getSingleProductDb(productId);
+    if (result === null) {
+      throw error;
+    } else {
+      res.status(200).json({
+        success: true,
+        message: `Id No. ${productId} Information Fetched Successfully"`,
+        data: result,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error! when Finding  the Data ",
+      error: error,
+    });
+  }
+};
+const deleteSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await ProductService.deleteSingleProductDb(productId);
+    if (result === null) {
+      throw error;
+    } else {
+      res.status(200).json({
+        success: true,
+        message: `Id No. ${productId} Information Deleted Successfully"`,
+        data: result,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error! when Finding  the Data ",
+      error: error,
+    });
+  }
+};
+
+const updateSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const data = req.body;
+    const { productId } = req.params;
+    const result = await ProductService.updateSingleProductDb(productId, data);
+
+    if (!result) {
+      res.status(500).json({
+        success: false,
+        message: `Id No. ${productId} Information not Found`,
+        data: result,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: `Id No. ${productId} Information Updated Successfully"`,
+        data: result,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error! updating Data",
+      error: error,
+    });
+  }
+};
 export const ProductController = {
   createProduct,
+  getProduct,
+  getSingleProduct,
+  deleteSingleProduct,
+  updateSingleProduct,
 };
