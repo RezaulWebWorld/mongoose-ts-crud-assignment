@@ -5,8 +5,11 @@ const createProductDb = async (productDb: Tproduct) => {
   const result = await Product.create(productDb);
   return result;
 };
-const getProductDb = async (productDb: Tproduct) => {
-  const result = await Product.find(productDb);
+const getProductDb = async (searchTerm: string) => {
+  const query = searchTerm
+    ? { name: new RegExp(searchTerm as string, "i") }
+    : {};
+  const result = await Product.find(query);
   return result;
 };
 const getSingleProductDb = async (id: string) => {

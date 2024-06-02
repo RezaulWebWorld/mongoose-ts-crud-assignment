@@ -26,12 +26,13 @@ const createProduct = async (req: Request, res: Response) => {
 /// Get a Product Controller
 const getProduct = async (req: Request, res: Response) => {
   try {
-    const data = req.body;
-    const result = await ProductService.getProductDb(data);
+    const searchTerm: string = req.query.searchTerm as string;
+
+    const result = await ProductService.getProductDb(searchTerm);
 
     res.status(200).json({
       success: true,
-      message: "All Product Fetched Successfully",
+      message: "Desire Product Fetched Successfully",
       data: result,
     });
   } catch (error) {
@@ -113,6 +114,30 @@ const updateSingleProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
+//   try {
+//     const searchTerm: string = req.query.searchTerm as string;
+
+//     const result = await ProductService.getProductByQueryDb(searchTerm);
+//     // const result = console.log(searchTerm);
+
+//     if (!result) {
+//       throw error;
+//     } else {
+//       res.status(200).json({
+//         success: true,
+//         message: `${searchTerm} Information Fetch Successfully"`,
+//         data: result,
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Error! fetching Data",
+//       error: error,
+//     });
+//   }
+// };
 export const ProductController = {
   createProduct,
   getProduct,
