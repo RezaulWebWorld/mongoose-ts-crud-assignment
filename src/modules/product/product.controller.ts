@@ -16,8 +16,7 @@ const createProduct = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message:
-        "Something Wrong Occurs When creating a New Product Successfully",
+      message: "Something Wrong Occurs When creating a New Product ",
       error: error,
     });
   }
