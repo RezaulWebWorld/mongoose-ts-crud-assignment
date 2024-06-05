@@ -27,7 +27,7 @@ const getOrder = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Desired {VALUE} Retrive Successfully",
+      message: `Desired email: ${email} Retrive Successfully`,
       data: result,
     });
   } catch (error) {

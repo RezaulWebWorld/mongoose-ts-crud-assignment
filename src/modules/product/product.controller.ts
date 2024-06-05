@@ -28,12 +28,15 @@ const getProduct = async (req: Request, res: Response) => {
     const searchTerm: string = req.query.searchTerm as string;
 
     const result = await ProductService.getProductDb(searchTerm);
-
-    res.status(200).json({
-      success: true,
-      message: "Desire Product Fetched Successfully",
-      data: result,
-    });
+    if (!result) {
+      throw error(" No Data Found");
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Desire Product Fetched Successfully",
+        data: result,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -47,7 +50,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const result = await ProductService.getSingleProductDb(productId);
-    if (result === null) {
+    if (!result) {
       throw error;
     } else {
       res.status(200).json({
