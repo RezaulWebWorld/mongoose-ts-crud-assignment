@@ -1,7 +1,5 @@
-import { Torders } from "./order.interface";
 import { Request, Response } from "express";
 import { Orderservice } from "./order.service";
-import { error } from "console";
 
 const createOrder = async (req: Request, res: Response) => {
   try {

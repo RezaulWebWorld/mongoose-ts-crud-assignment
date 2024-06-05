@@ -29,7 +29,7 @@ const deleteSingleProductDb = async (id: string) => {
 };
 
 //Services for update a product
-const updateSingleProductDb = async (id: string, updateProduct: any) => {
+const updateSingleProductDb = async (id: string, updateProduct: Tproduct) => {
   const result = await Product.findByIdAndUpdate({ _id: id }, updateProduct, {
     new: true,
   });
