@@ -36,11 +36,16 @@ const getProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const searchTerm = req.query.searchTerm;
         const result = yield product_service_1.ProductService.getProductDb(searchTerm);
-        res.status(200).json({
-            success: true,
-            message: "Desire Product Fetched Successfully",
-            data: result,
-        });
+        if (!result) {
+            throw (0, console_1.error)(" No Data Found");
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                message: "Desire Product Fetched Successfully",
+                data: result,
+            });
+        }
     }
     catch (error) {
         res.status(500).json({
@@ -54,7 +59,7 @@ const getSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const { productId } = req.params;
         const result = yield product_service_1.ProductService.getSingleProductDb(productId);
-        if (result === null) {
+        if (!result) {
             throw console_1.error;
         }
         else {

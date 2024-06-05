@@ -35,7 +35,7 @@ const getOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield order_service_1.Orderservice.getOrderDb(email);
         res.status(200).json({
             success: true,
-            message: "Desired {VALUE} Retrive Successfully",
+            message: `Desired email: ${email} Retrive Successfully`,
             data: result,
         });
     }
